@@ -150,6 +150,7 @@
           event.preventDefault(); // For desktop Safari drag
         } else {
           touches = event.touches[0];
+          if((event.touches === null || event.touches.length === 0) && typeof event.workAroundTouches != "undefined") touches = event.workAroundTouches;
         }
 
         // measure start values
@@ -188,8 +189,12 @@
         if (isMouseEvent(event)) {
           touches = event;
         } else {
+
+          touches = event.touches[0];
+          if((event.touches === null || event.touches.length === 0) && typeof event.workAroundTouches != "undefined") touches = event.workAroundTouches;
+
           // ensure swiping with one touch and not pinching
-          if ( event.touches.length > 1 || event.scale && event.scale !== 1) {
+          if ( touches.length > 1 || event.scale && event.scale !== 1) {
             return;
           }
 
@@ -197,7 +202,7 @@
             event.preventDefault();
           }
 
-          touches = event.touches[0];
+
         }
 
         // measure change in x and y
